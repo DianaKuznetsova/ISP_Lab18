@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ISP_Lab17
+namespace ISP_Lab18
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

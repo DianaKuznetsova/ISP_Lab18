@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace ISP_Lab17
+namespace ISP_Lab18
 {
     /// <summary>
     /// Interaction logic for App.xaml
