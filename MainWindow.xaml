@@ -115,16 +115,17 @@
 
             <ListView.Resources>
                 <local:DateConverter x:Key="dateConverter" />
+                <local:GenderToNameConverter x:Key="genderConverter" />
             </ListView.Resources>
 
             <ListView.View>
                 <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=FirstName}">Имя</GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=LastName}">Фамилия</GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=MiddleName}">Отчесвто</GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Bdate, Converter={StaticResource dateConverter}}">Дата Рождения</GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Gender}">Пол</GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Phone}">Мобильный номер</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=FirstName}" Width="100">Имя</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=LastName}" Width="100">Фамилия</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=MiddleName}" Width="100">Отчество</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Bdate, Converter={StaticResource dateConverter}}" Width="100">Дата Рождения</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Gender, Converter={StaticResource genderConverter}}" Width="100">Пол</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Phone}" Width="150">Мобильный номер</GridViewColumn>
                 </GridView>
             </ListView.View>
 
