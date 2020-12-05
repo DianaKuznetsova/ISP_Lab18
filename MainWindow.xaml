@@ -3,9 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ISP_Lab18"
+        xmlns:local="clr-namespace:ISP_Lab18" xmlns:col="clr-namespace:System.Collections;assembly=mscorlib"
         mc:Ignorable="d"
-        Title="Lab17" Height="450" Width="690"
+        Title="Lab17" Height="650" Width="690"
         ResizeMode="NoResize"
         FontSize="25">
     <Grid ShowGridLines="False" 
@@ -19,11 +19,13 @@
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"></ColumnDefinition>
             <ColumnDefinition ></ColumnDefinition>
-          
+
         </Grid.ColumnDefinitions>
 
         <TextBlock 
@@ -33,6 +35,7 @@
             Text="Имя:"
             />
         <TextBox
+            x:Name="firstName"
             Grid.Row="0"
             Grid.Column="1"/>
         <TextBlock 
@@ -42,6 +45,7 @@
             Text="Фамилия:"
             />
         <TextBox
+            x:Name="lastName"
             Grid.Row="1"
             Grid.Column="1"/>
         <TextBlock 
@@ -50,6 +54,7 @@
             Text="Отчество:"
             />
         <TextBox
+            x:Name="middleName"
             Grid.Row="2"
             Grid.Column="1"/>
         <TextBlock 
@@ -63,8 +68,7 @@
             Margin="5"
             Grid.Row="3"
             Grid.Column="1"
-            FirstDayOfWeek="Monday"
-            SelectedDatesChanged="calendar_SelectedDatesChanged">
+            FirstDayOfWeek="Monday">
         </Calendar>
         <TextBlock 
             Grid.Row="4"
@@ -72,14 +76,14 @@
             VerticalAlignment="Center"
             Text="Пол:"
             />
+
         <StackPanel 
             x:Name="stackPanel"
             Margin="5"
             Grid.Row="4"
             Grid.Column="1">
-            <RadioButton GroupName="Gender" Content="Мужской:" IsChecked="True" />
-            <RadioButton GroupName="Gender" Content="Женский:" />
-         
+            <RadioButton GroupName="Gender" Name="male" Content="Мужской" />
+            <RadioButton GroupName="Gender" Name="female" Content="Женский" />
         </StackPanel>
         <TextBlock 
             Grid.Row="5"
@@ -88,7 +92,42 @@
             Text="Мобильный номер:"
             />
         <TextBox
+            x:Name="phone"
             Grid.Row="5"
             Grid.Column="1"/>
+        <Button
+            Grid.Row="6"
+            Grid.Column="1"
+            Width="150"
+            HorizontalAlignment="Right"
+            Click="Button_Click"
+            x:Name="addUser"
+            Content="Добавить"
+                />
+
+        <ListView 
+            SelectionChanged="Selection_Item"
+            Name="usersList" 
+            Grid.Row="7"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            FontSize="10" >
+
+            <ListView.Resources>
+                <local:DateConverter x:Key="dateConverter" />
+            </ListView.Resources>
+
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=FirstName}">Имя</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=LastName}">Фамилия</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=MiddleName}">Отчесвто</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Bdate, Converter={StaticResource dateConverter}}">Дата Рождения</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Gender}">Пол</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Phone}">Мобильный номер</GridViewColumn>
+                </GridView>
+            </ListView.View>
+
+        </ListView>
     </Grid>
 </Window>
