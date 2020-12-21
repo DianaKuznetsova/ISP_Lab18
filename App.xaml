@@ -4,6 +4,11 @@
              xmlns:local="clr-namespace:ISP_Lab18"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="MaterialWindowStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <FontFamily x:Key="RobotoRegular">pack://application:,,,/Fonts/#Roboto</FontFamily>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

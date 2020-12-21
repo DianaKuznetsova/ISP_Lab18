@@ -1,7 +1,8 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 
 using System.Collections.ObjectModel;
-
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -14,17 +15,18 @@ namespace ISP_Lab18
     /// </summary>
     public partial class MainWindow : Window
     {
-
-        ObservableCollection<User> users = new ObservableCollection<User>();
-        User selectedUser;
+        private UsersDbContext usersDb;
+        private User selectedUser;
 
         public MainWindow()
         {
             InitializeComponent();
+            usersDb = new UsersDbContext();
+            usersDb.Users.Load();
             selectedUser = new User();
             Binding listBinding = new Binding()
             {
-                Source = users
+                Source = usersDb.Users.Local.ToBindingList()
             };
             BindingOperations.SetBinding(usersList, ListView.ItemsSourceProperty, listBinding);
             Bind(selectedUser);
@@ -32,7 +34,15 @@ namespace ISP_Lab18
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            users.Add(selectedUser);
+            if (selectedUser.Id == 0)
+            {
+                usersDb.Users.Add(selectedUser);
+                usersDb.SaveChanges();
+            } else
+            {
+                usersDb.Users.Update(selectedUser);
+                usersDb.SaveChanges();
+            }
             selectedUser = new User();
             Bind(selectedUser);
 
@@ -40,8 +50,8 @@ namespace ISP_Lab18
 
         private void Selection_Item(object sender, RoutedEventArgs e)
         {
-            selectedUser = users[usersList.SelectedIndex];
-            Bind(users[usersList.SelectedIndex]);
+            selectedUser = usersDb.Users.Skip(usersList.SelectedIndex).First();
+            Bind(selectedUser);
 
         }
         private void Bind(User sourse)
@@ -99,6 +109,14 @@ namespace ISP_Lab18
                 ConverterParameter = Gender.Female
             };
             BindingOperations.SetBinding(female, RadioButton.IsCheckedProperty, femaleGenderBinding);
+          
+            Binding catsBinding = new Binding("Cats")
+            {
+                Source = sourse,
+                Mode = BindingMode.TwoWay,
+                UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
+            };
+            BindingOperations.SetBinding(cats, CheckBox.IsCheckedProperty, catsBinding);
 
             Binding bindingPhone = new Binding("Phone")
             {
@@ -109,5 +127,7 @@ namespace ISP_Lab18
             BindingOperations.SetBinding(phone, TextBox.TextProperty, bindingPhone);
 
         }
+
+        
     }
 }

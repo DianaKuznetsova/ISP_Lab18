@@ -5,9 +5,99 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ISP_Lab18" xmlns:col="clr-namespace:System.Collections;assembly=mscorlib"
         mc:Ignorable="d"
-        Title="Lab17" Height="650" Width="690"
+        Title="Questionnaire" Height="650" Width="800"
         ResizeMode="NoResize"
-        FontSize="25">
+        FontSize="25"
+        Style="{StaticResource MaterialWindow}">
+    <Window.Resources>
+        <Style x:Key="MaterialButtonStyle" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Border" Background="{DynamicResource ColorPrimary}"
+                                CornerRadius="5" >
+                            <Border.Effect>
+                                <DropShadowEffect
+                                    Color="black"
+                                    Opacity="0.5"
+                                    BlurRadius="7"
+                                    ShadowDepth="1"/>
+                            </Border.Effect>
+                            <ContentPresenter Margin="2"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="Opacity" Value="0.9" />
+                                <Setter TargetName="Border" Property="Effect">
+                                    <Setter.Value>
+                                        <DropShadowEffect
+                                    Color="black"
+                                    Opacity="0.7"
+                                    BlurRadius="10"
+                                    ShadowDepth="2"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Border" Property="Opacity" Value="0.7" />
+                                <Setter TargetName="Border" Property="Effect">
+                                    <Setter.Value>
+                                        <DropShadowEffect
+                                    Color="black"
+                                    Opacity="0.8"
+                                    BlurRadius="15"
+                                    ShadowDepth="4"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="Typography.Capitals" Value="AllSmallCaps" />
+        </Style>
+        <Style x:Key="MaterialSwitch" TargetType="CheckBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="CheckBox">
+                        <StackPanel Orientation="Horizontal">
+                            <Canvas Height="26" Margin="5">
+                                <Border x:Name="Border" Width="40" Height="20" Background="{DynamicResource ColorPrimary}" Opacity="0.5" 
+                                        CornerRadius="10" Margin="0, 3"/>
+                                <Ellipse x:Name="Ellipse"  Margin="15,0" Width="26" Height="26" Fill="{DynamicResource ColorPrimary}">
+                                    <Ellipse.Effect>
+                                        <DropShadowEffect
+                                    Color="black"
+                                    Opacity="0.7"
+                                    BlurRadius="10"
+                                    ShadowDepth="2"/>
+                                    </Ellipse.Effect>
+                                </Ellipse>
+                            </Canvas>
+                            <ContentPresenter Margin="50, 0" VerticalAlignment="Center" />
+                        </StackPanel>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="False">
+                                <Setter TargetName="Border" Property="Background" Value="Gray" />
+                                <Setter TargetName="Ellipse" Property="Margin" Value="0" />
+                                <Setter TargetName="Ellipse" Property="Fill" Value="White" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="FontSize" Value="20" />
+        </Style>
+        <Style x:Key="MaterialProgressBar" TargetType="ProgressBar">
+            <Setter Property="Minimum" Value="0" />
+            <Setter Property="Maximum" Value="100" />
+            <Setter Property="Foreground" Value="{StaticResource ColorPrimary}" />
+        </Style>
+    </Window.Resources>
     <Grid ShowGridLines="False" 
           Margin="5"
           RenderTransformOrigin="0.501,0.523"
@@ -21,6 +111,8 @@
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="150"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"></ColumnDefinition>
@@ -28,37 +120,44 @@
 
         </Grid.ColumnDefinitions>
 
+        <ProgressBar 
+            Style="{StaticResource MaterialProgressBar}" 
+            IsIndeterminate="True" 
+            Grid.Row="0" 
+            Grid.Column="0"
+            Height="5"
+            Grid.ColumnSpan="2" />
         <TextBlock 
-            Grid.Row="0"
+            Grid.Row="1"
             Grid.Column="0"
             VerticalAlignment="Center"
             Text="Имя:"
             />
         <TextBox
             x:Name="firstName"
-            Grid.Row="0"
+            Grid.Row="1"
             Grid.Column="1"/>
         <TextBlock 
-            Grid.Row="1"
+            Grid.Row="2"
             Grid.Column="0"
             VerticalAlignment="Center"
             Text="Фамилия:"
             />
         <TextBox
             x:Name="lastName"
-            Grid.Row="1"
+            Grid.Row="2"
             Grid.Column="1"/>
         <TextBlock 
-            Grid.Row="2"
+            Grid.Row="3"
             Grid.Column="0"
             Text="Отчество:"
             />
         <TextBox
             x:Name="middleName"
-            Grid.Row="2"
+            Grid.Row="3"
             Grid.Column="1"/>
         <TextBlock 
-            Grid.Row="3"
+            Grid.Row="4"
             Grid.Column="0"
             VerticalAlignment="Center"
             Text="Дата Рождения:"
@@ -66,12 +165,12 @@
         <Calendar 
             x:Name="calendar" 
             Margin="5"
-            Grid.Row="3"
+            Grid.Row="4"
             Grid.Column="1"
             FirstDayOfWeek="Monday">
         </Calendar>
         <TextBlock 
-            Grid.Row="4"
+            Grid.Row="5"
             Grid.Column="0"
             VerticalAlignment="Center"
             Text="Пол:"
@@ -80,35 +179,51 @@
         <StackPanel 
             x:Name="stackPanel"
             Margin="5"
-            Grid.Row="4"
+            Grid.Row="5"
             Grid.Column="1">
+         
             <RadioButton GroupName="Gender" Name="male" Content="Мужской" />
             <RadioButton GroupName="Gender" Name="female" Content="Женский" />
         </StackPanel>
         <TextBlock 
-            Grid.Row="5"
+            Grid.Row="6"
+            Grid.Column="0"
+            VerticalAlignment="Center"
+            Text="Есть котюни?"
+            />
+        <StackPanel 
+            x:Name="stackPanel1"
+            Margin="5"
+            Grid.Row="6"
+            Grid.Column="1">
+            <CheckBox x:Name="cats" Content="Нет/Да" Style="{StaticResource MaterialSwitch}" />
+            
+        </StackPanel>
+        <TextBlock 
+            Grid.Row="7"
             Grid.Column="0"
             VerticalAlignment="Center"
             Text="Мобильный номер:"
             />
         <TextBox
             x:Name="phone"
-            Grid.Row="5"
+            Grid.Row="7"
             Grid.Column="1"/>
         <Button
-            Grid.Row="6"
+            Grid.Row="8"
             Grid.Column="1"
             Width="150"
+            Height="35"
             HorizontalAlignment="Right"
             Click="Button_Click"
             x:Name="addUser"
             Content="Добавить"
-                />
+            Style="{StaticResource MaterialButtonStyle}"/>
 
         <ListView 
             SelectionChanged="Selection_Item"
             Name="usersList" 
-            Grid.Row="7"
+            Grid.Row="9"
             Grid.Column="0"
             Grid.ColumnSpan="2"
             FontSize="10" >
@@ -116,6 +231,7 @@
             <ListView.Resources>
                 <local:DateConverter x:Key="dateConverter" />
                 <local:GenderToNameConverter x:Key="genderConverter" />
+                <local:CatsConverter x:Key="catsConverter" />
             </ListView.Resources>
 
             <ListView.View>
@@ -125,6 +241,7 @@
                     <GridViewColumn DisplayMemberBinding="{Binding Path=MiddleName}" Width="100">Отчество</GridViewColumn>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Bdate, Converter={StaticResource dateConverter}}" Width="100">Дата Рождения</GridViewColumn>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Gender, Converter={StaticResource genderConverter}}" Width="100">Пол</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Cats, Converter={StaticResource catsConverter}}" Width="100">Есть кот?</GridViewColumn>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Phone}" Width="150">Мобильный номер</GridViewColumn>
                 </GridView>
             </ListView.View>
